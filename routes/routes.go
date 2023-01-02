@@ -6,8 +6,9 @@ import (
 	"github.com/pedropaccola/go-apigin-alura/controllers"
 )
 
-func HandleRequest() {
+func HandleRequests() {
 	r := gin.Default()
 	r.GET("/students", controllers.GetAllStudents)
+	r.GET("/:name", controllers.Greetings)
 	r.Run()
 }
