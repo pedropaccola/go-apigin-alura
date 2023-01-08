@@ -1,14 +1,15 @@
 package models
 
+import "gorm.io/gorm"
+
 type Student struct {
-	ID        int    `json:"id"`
+	gorm.Model
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 }
 
-func NewStudent(id int, f, l string) *Student {
+func NewStudent(f, l string) *Student {
 	return &Student{
-		ID:        id,
 		FirstName: f,
 		LastName:  l,
 	}
@@ -17,9 +18,9 @@ func NewStudent(id int, f, l string) *Student {
 type Students []*Student
 
 func NewStudents() *Students {
-	a := NewStudent(1, "Pedro", "Paccola")
-	b := NewStudent(2, "Zeca", "Pagodinho")
-	c := NewStudent(3, "Jona", "Dabe")
+	a := NewStudent("Pedro", "Paccola")
+	b := NewStudent("Zeca", "Pagodinho")
+	c := NewStudent("Jona", "Dabe")
 	return &Students{
 		a, b, c,
 	}
