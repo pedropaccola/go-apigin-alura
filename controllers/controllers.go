@@ -9,8 +9,24 @@ import (
 )
 
 func GetAllStudents(c *gin.Context) {
-	students := models.NewStudents()
+	var students []models.Student
+	database.DB.Find(&students)
 	c.JSON(200, students)
+}
+
+func GetStudentById(c *gin.Context) {
+	var student models.Student
+	id := c.Params.ByName("id")
+	database.DB.First(&student, id)
+
+	if student.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"not found": "student not found",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, student)
 }
 
 func CreateStudent(c *gin.Context) {
@@ -28,6 +44,6 @@ func CreateStudent(c *gin.Context) {
 func Greetings(c *gin.Context) {
 	name := c.Params.ByName("name")
 	c.JSON(200, gin.H{
-		"API": "Greetings " + name + " !",
+		"api": "greetings " + name + " !",
 	})
 }
